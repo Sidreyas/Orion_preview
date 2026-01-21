@@ -5,12 +5,12 @@ import { usePathname } from "next/navigation";
 import { 
   LayoutDashboard, 
   ShieldAlert, 
-  Search, 
+  Sparkles,
   Settings, 
   Bell, 
-  Users,
   ChevronRight,
-  Zap
+  Zap,
+  PlugZap
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -20,22 +20,22 @@ const Sidebar = () => {
   const menuItems = [
     { name: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
     { name: "Investigations", icon: ShieldAlert, href: "/investigations/all" },
-    { name: "Threat Hunting", icon: Search, href: "/hunting" },
-    { name: "Team", icon: Users, href: "/team" },
-    { name: "Notifications", icon: Bell, href: "/notifications" },
+    { name: "Connectors", icon: PlugZap, href: "/connectors" },
     { name: "Settings", icon: Settings, href: "/settings" },
   ];
 
   return (
-    <aside className="w-64 border-r border-border flex flex-col h-full bg-[#0B0F19]/50 backdrop-blur-xl">
+    <aside className="w-64 border-r border-border flex flex-col h-full bg-[#151b23] relative">
       <div className="p-6 flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center shadow-lg shadow-brand-primary/20">
-          <Zap className="text-white w-6 h-6 fill-current" />
+        <div className="w-10 h-10 rounded-xl bg-brand-primary flex items-center justify-center shadow-lg shadow-brand-primary/20">
+          <Sparkles className="text-white w-5 h-5" />
         </div>
-        <span className="text-xl font-bold tracking-tight">ORION</span>
+        <span className="text-lg font-bold tracking-tight text-white">
+          COGNITIX AI
+        </span>
       </div>
 
-      <nav className="flex-1 px-4 py-6 space-y-2">
+      <nav className="flex-1 px-4 py-6 space-y-1">
         {menuItems.map((item) => {
           const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname?.startsWith(item.href));
           return (
@@ -43,14 +43,14 @@ const Sidebar = () => {
               key={item.name}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group relative",
+                "flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group relative",
                 isActive 
-                  ? "bg-gradient-primary text-white shadow-lg shadow-brand-primary/20" 
+                  ? "bg-brand-primary/10 text-brand-primary border border-brand-primary/20" 
                   : "text-gray-400 hover:text-white hover:bg-white/5"
               )}
             >
-              <item.icon className={cn("w-5 h-5", isActive ? "text-white" : "group-hover:text-white")} />
-              <span className="font-medium">{item.name}</span>
+              <item.icon className={cn("w-5 h-5", isActive && "text-brand-primary")} />
+              <span className="font-medium text-sm">{item.name}</span>
               {isActive && <ChevronRight className="ml-auto w-4 h-4" />}
             </Link>
           );
@@ -58,11 +58,11 @@ const Sidebar = () => {
       </nav>
 
       <div className="p-4 mt-auto">
-        <div className="card-glass p-4 bg-gradient-to-br from-white/5 to-transparent">
-          <p className="text-xs text-gray-400 mb-2 uppercase tracking-wider font-semibold">System Status</p>
+        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <p className="text-xs text-gray-500 mb-2 uppercase tracking-wider font-semibold">System Status</p>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-brand-success animate-pulse" />
-            <span className="text-sm font-medium">AI Agent Active</span>
+            <span className="text-sm font-medium text-gray-300">AI Agent Active</span>
           </div>
         </div>
       </div>

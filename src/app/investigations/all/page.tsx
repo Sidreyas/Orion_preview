@@ -14,6 +14,7 @@ import {
   Info
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/context/AuthContext";
 
 const investigations = [
   {
@@ -66,16 +67,19 @@ const investigations = [
 export default function InvestigationsPage() {
   const [activeFilter, setActiveFilter] = useState("All");
   const router = useRouter();
+  const { selectedWorkspace } = useAuth();
 
   return (
     <div className="p-8 space-y-8 max-w-[1600px] mx-auto">
       {/* Header & Stats */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight mb-2">Investigations</h1>
+          <h1 className="text-3xl font-bold tracking-tight mb-2 text-white">
+            {selectedWorkspace?.name || "Investigations"}
+          </h1>
           <p className="text-gray-400">Manage and review all AI-driven alert investigations.</p>
         </div>
-        <div className="flex items-center gap-4 bg-white/5 border border-border p-2 rounded-2xl">
+        <div className="flex items-center gap-4 bg-white/5 border border-white/10 p-2 rounded-2xl">
           <div className="px-4 py-2 border-r border-border">
             <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Queue</p>
             <p className="text-xl font-bold">12</p>
@@ -91,9 +95,9 @@ export default function InvestigationsPage() {
         </div>
       </div>
 
-      {/* Filters & Actions */}
-      <div className="flex flex-col lg:flex-row gap-4 justify-between items-center">
-        <div className="flex items-center gap-2 p-1 bg-white/5 rounded-xl border border-border w-full lg:w-auto">
+              {/* Filters & Actions */}
+              <div className="flex flex-col lg:flex-row gap-4 justify-between items-center">
+                <div className="flex items-center gap-2 p-1 bg-white/5 rounded-xl border border-white/10 w-full lg:w-auto">
           {["All", "Malicious", "Suspicious", "Benign"].map((filter) => (
             <button
               key={filter}
@@ -110,20 +114,20 @@ export default function InvestigationsPage() {
           ))}
         </div>
         
-        <div className="flex items-center gap-3 w-full lg:w-auto">
-          <div className="relative flex-1 lg:w-80">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-            <input 
-              type="text" 
-              placeholder="Search by ID, Host, or Source..."
-              className="w-full bg-white/5 border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm outline-none focus:border-brand-primary/50 transition-colors"
-            />
-          </div>
-          <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-border hover:bg-white/10 transition-colors text-sm font-medium">
-            <Filter className="w-4 h-4" />
-            Filters
-          </button>
-        </div>
+                <div className="flex items-center gap-3 w-full lg:w-auto">
+                  <div className="relative flex-1 lg:w-80 group">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 group-focus-within:text-brand-primary transition-colors" />
+                    <input 
+                      type="text" 
+                      placeholder="Search by ID, Host, or Source..."
+                      className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm outline-none focus:border-brand-primary/50 focus:ring-2 focus:ring-brand-primary/20 transition-all placeholder:text-gray-500"
+                    />
+                  </div>
+                  <button className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-sm font-medium text-gray-300">
+                    <Filter className="w-4 h-4" />
+                    Filters
+                  </button>
+                </div>
       </div>
 
       {/* Main Table Card */}

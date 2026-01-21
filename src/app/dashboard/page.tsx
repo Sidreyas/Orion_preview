@@ -5,11 +5,15 @@ import {
   Clock, 
   UserCheck, 
   ShieldCheck, 
-  ArrowUpRight,
-  MoreVertical,
-  Activity
+  ArrowUpRight, 
+  MoreVertical, 
+  Activity,
+  Calendar,
+  ChevronDown
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/context/AuthContext";
+import { useState } from "react";
 
 const metrics = [
   {
@@ -71,35 +75,114 @@ const activeInvestigations = [
 ];
 
 export default function DashboardPage() {
+  const { selectedWorkspace } = useAuth();
+  const [timeFilter, setTimeFilter] = useState("Last 24 Hours");
+  const [isTimeFilterOpen, setIsTimeFilterOpen] = useState(false);
+  const [isAbsolute, setIsAbsolute] = useState(false);
+  const [dateRange, setDateRange] = useState({ start: "", end: "" });
+
+  const relativeOptions = [
+    "Last 24 Hours",
+    "Last 3 Days",
+    "Last 7 Days",
+    "Last 30 Days",
+    "Last 6 Months",
+    "Last 1 Year",
+  ];
+
   return (
     <div className="p-8 space-y-8 max-w-[1600px] mx-auto">
       {/* Header */}
-      <div className="flex justify-between items-end">
+      <div className="flex justify-between items-start">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight mb-2">Security Dashboard</h1>
+          <h1 className="text-3xl font-bold tracking-tight mb-2 text-white">
+            {selectedWorkspace?.name || "Security"} Dashboard
+          </h1>
           <p className="text-gray-400">Welcome back, analyst. Here's your autonomous SOC overview.</p>
         </div>
-        <div className="flex gap-3">
-          <button className="px-4 py-2 rounded-xl bg-white/5 border border-border hover:bg-white/10 transition-colors font-medium">
-            Export Report
-          </button>
-          <button className="px-4 py-2 rounded-xl bg-gradient-primary shadow-lg shadow-brand-primary/20 hover:opacity-90 transition-opacity font-medium">
-            New Investigation
-          </button>
+        
+                {/* Time Filter Dropdown */}
+                <div className="relative">
+                  <button 
+                    onClick={() => setIsTimeFilterOpen(!isTimeFilterOpen)}
+                    className="flex items-center gap-3 px-4 py-2.5 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-sm font-medium"
+                  >
+                    <Calendar className="w-4 h-4 text-brand-primary" />
+                    <span className="text-white">{isAbsolute ? "Custom Range" : timeFilter}</span>
+                    <ChevronDown className={cn("w-4 h-4 text-gray-500 transition-transform", isTimeFilterOpen && "rotate-180")} />
+                  </button>
+
+                  {isTimeFilterOpen && (
+                    <div className="absolute top-full right-0 mt-2 w-72 card-glass p-4 shadow-2xl z-50 bg-[#1a2332] border-white/10 backdrop-blur-xl">
+              <div className="space-y-1 mb-4">
+                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest px-2 mb-2">Relative Range</p>
+                {relativeOptions.map((opt) => (
+                  <button
+                    key={opt}
+                    onClick={() => {
+                      setTimeFilter(opt);
+                      setIsAbsolute(false);
+                      setIsTimeFilterOpen(false);
+                    }}
+                    className={cn(
+                      "w-full text-left px-3 py-2 rounded-lg text-sm transition-all",
+                      !isAbsolute && timeFilter === opt ? "bg-brand-primary/10 text-brand-primary" : "text-gray-400 hover:text-white hover:bg-white/5"
+                    )}
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </div>
+
+              <div className="pt-4 border-t border-white/5">
+                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest px-2 mb-3">Absolute Range</p>
+                <div className="space-y-3 px-2">
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-gray-500 uppercase font-bold">Start Date & Time</label>
+                    <input 
+                      type="datetime-local" 
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs outline-none focus:border-brand-primary/50 text-white"
+                      value={dateRange.start}
+                      onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-gray-500 uppercase font-bold">End Date & Time</label>
+                    <input 
+                      type="datetime-local" 
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs outline-none focus:border-brand-primary/50 text-white"
+                      value={dateRange.end}
+                      onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
+                    />
+                  </div>
+                  <button 
+                    onClick={() => {
+                      setIsAbsolute(true);
+                      setIsTimeFilterOpen(false);
+                    }}
+                    disabled={!dateRange.start || !dateRange.end}
+                    className="w-full bg-brand-primary text-white py-2.5 rounded-xl font-bold text-xs shadow-lg shadow-brand-primary/20 hover:opacity-90 transition-all disabled:opacity-50 disabled:shadow-none mt-2"
+                  >
+                    Apply Custom Range
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Metrics Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {metrics.map((metric) => (
-          <div key={metric.title} className="card-glass p-6 group hover:border-white/20 transition-all">
-            <div className="flex justify-between items-start mb-4">
-              <div className={cn(
-                "w-12 h-12 rounded-xl bg-gradient-to-br flex items-center justify-center shadow-lg",
-                metric.gradient
-              )}>
-                <metric.icon className="text-white w-6 h-6" />
-              </div>
+              {/* Metrics Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {metrics.map((metric) => (
+                  <div key={metric.title} className="card-glass p-6 hover:border-white/20 transition-all duration-200">
+                    <div className="flex justify-between items-start mb-4">
+                      <div className={cn(
+                        "w-12 h-12 rounded-xl bg-gradient-to-br flex items-center justify-center shadow-lg",
+                        metric.gradient
+                      )}>
+                        <metric.icon className="text-white w-6 h-6" />
+                      </div>
               <div className={cn(
                 "flex items-center gap-1 text-sm font-medium px-2 py-1 rounded-full",
                 metric.trend === "up" ? "text-brand-success-alt bg-brand-success/10" : "text-brand-danger-alt bg-brand-danger/10"
@@ -110,7 +193,11 @@ export default function DashboardPage() {
             </div>
             <div>
               <p className="text-gray-400 text-sm font-medium mb-1">{metric.title}</p>
-              <h3 className="text-2xl font-bold">{metric.value}</h3>
+              <h3 className="text-2xl font-bold">
+                {metric.title === "Total Alerts Investigated" && selectedWorkspace 
+                  ? (selectedWorkspace.activeIncidents * 10).toLocaleString() 
+                  : metric.value}
+              </h3>
             </div>
           </div>
         ))}
