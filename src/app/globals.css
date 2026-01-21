@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #0B0F19;
+  --color-foreground: #FFFFFF;
+  --color-card: rgba(255, 255, 255, 0.03);
+  --color-border: rgba(255, 255, 255, 0.1);
+  
+  --color-brand-primary: #00d2ff;
+  --color-brand-secondary: #3a7bd5;
+  --color-brand-success: #11998e;
+  --color-brand-success-alt: #38ef7d;
+  --color-brand-danger: #ff4b2b;
+  --color-brand-danger-alt: #ff416c;
+
+  --background-image-gradient-primary: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+  --background-image-gradient-success: linear-gradient(90deg, #11998e 0%, #38ef7d 100%);
+  --background-image-gradient-danger: linear-gradient(90deg, #ff4b2b 0%, #ff416c 100%);
+  --background-image-glass-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+:root {
+  --background: #0B0F19;
+  --foreground: #FFFFFF;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Inter', sans-serif;
+}
+
+@utility card-glass {
+  background-color: var(--color-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+}
+
+@utility glass-hover {
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s;
+  }
+}
+
+@utility primary-gradient-text {
+  background-clip: text;
+  color: transparent;
+  background-image: var(--background-image-gradient-primary);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
