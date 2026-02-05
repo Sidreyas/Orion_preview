@@ -5,11 +5,10 @@ import { usePathname } from "next/navigation";
 import { 
   LayoutDashboard, 
   ShieldAlert, 
-  Sparkles,
+  Zap,
   Settings, 
   Bell, 
   ChevronRight,
-  Zap,
   PlugZap
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -28,10 +27,10 @@ const Sidebar = () => {
     <aside className="w-64 border-r border-border flex flex-col h-full bg-[#151b23] relative">
       <div className="p-6 flex items-center gap-3">
         <div className="w-10 h-10 rounded-xl bg-brand-primary flex items-center justify-center shadow-lg shadow-brand-primary/20">
-          <Sparkles className="text-white w-5 h-5" />
+          <Zap className="text-white w-5 h-5" />
         </div>
         <span className="text-lg font-bold tracking-tight text-white">
-          COGNITIX AI
+          ORION
         </span>
       </div>
 

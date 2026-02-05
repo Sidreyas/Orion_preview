@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { 
-  Shield, 
+  Zap, 
   Lock, 
   Info, 
   ChevronDown, 
@@ -47,9 +47,9 @@ export default function LoginPage() {
 
         <div className="flex items-center gap-2 mb-24 z-10">
           <div className="w-10 h-10 rounded-xl bg-brand-primary flex items-center justify-center shadow-lg shadow-brand-primary/20">
-            <Shield className="text-white w-5 h-5" />
+            <Zap className="text-white w-5 h-5" />
           </div>
-          <span className="text-lg font-bold tracking-tight text-white">Cognitix AI</span>
+          <span className="text-lg font-bold tracking-tight text-white">Orion</span>
         </div>
 
         <div className="flex-1 flex flex-col justify-center z-10">
@@ -59,18 +59,18 @@ export default function LoginPage() {
             transition={{ duration: 0.6 }}
           >
             <div className="w-16 h-16 rounded-2xl bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center mb-6">
-              <Shield className="text-brand-primary w-8 h-8" />
+              <Zap className="text-brand-primary w-8 h-8" />
             </div>
             <p className="text-brand-primary text-xs font-bold uppercase tracking-[0.2em] mb-4">Enterprise SOC Platform</p>
             <h1 className="text-6xl font-bold tracking-tight mb-4">
               <span className="text-white">SOC AI Agent</span><br />
-              <span className="text-brand-primary">Cognitix AI</span>
+              <span className="text-brand-primary">Orion</span>
             </h1>
             <p className="text-2xl text-gray-300 font-medium mb-12">
               Autonomous investigations with human-in-the-loop governance
             </p>
             <p className="text-gray-400 max-w-lg leading-relaxed mb-12">
-              Secureplex SOC AI Agent assists security operations teams by autonomously investigating alerts from Microsoft Sentinel, enriching them with evidence, and presenting explainable conclusions for human review and approval.
+              Orion SOC AI Agent assists security operations teams by autonomously investigating alerts from Microsoft Sentinel, enriching them with evidence, and presenting explainable conclusions for human review and approval.
             </p>
 
             <div className="space-y-6">
@@ -91,7 +91,7 @@ export default function LoginPage() {
         </div>
 
         <div className="mt-auto text-sm text-gray-500 z-10">
-          © Secureplex SOC AI Platform
+          @ Made by SkillQuotient technologies
         </div>
       </div>
 
@@ -111,7 +111,7 @@ export default function LoginPage() {
               <div className="w-14 h-14 rounded-2xl bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center mb-6">
                 <Lock className="text-brand-primary w-6 h-6" />
               </div>
-              <h2 className="text-3xl font-bold mb-2">Sign in to Secureplex</h2>
+              <h2 className="text-3xl font-bold mb-2">Sign in to Orion</h2>
               <p className="text-gray-400">Access your SOC AI investigation workspace</p>
             </div>
 
@@ -139,48 +139,14 @@ export default function LoginPage() {
               </button>
             </div>
 
-            <div className="p-4 rounded-xl bg-brand-primary/5 border border-brand-primary/10 flex gap-4 mb-8">
+            <div className="p-4 rounded-xl bg-brand-primary/5 border border-brand-primary/10 flex gap-4">
               <Info className="text-brand-primary w-5 h-5 shrink-0 mt-0.5" />
               <p className="text-sm text-gray-400 leading-relaxed">
                 Single Sign-On is used to enforce enterprise security and role-based access.
               </p>
             </div>
-
-            <div className="space-y-3 mb-8">
-              <label className="text-xs font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2">
-                <Shield className="w-3 h-3" />
-                Preview Role
-              </label>
-              <div className="relative">
-                <select 
-                  value={selectedRole}
-                  onChange={(e) => setSelectedRole(e.target.value)}
-                  className="w-full bg-white/[0.05] border border-white/[0.1] rounded-xl px-4 py-3 outline-none focus:border-brand-primary/50 transition-all appearance-none text-gray-200 font-medium"
-                >
-                  <option>SOC Level 1 Analyst</option>
-                  <option>SOC Manager</option>
-                  <option>Incident Responder</option>
-                </select>
-                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
-              </div>
-              <p className="text-xs text-gray-500">
-                Role-based access controls available features and actions across the platform.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.05] text-xs text-gray-500 text-center leading-relaxed italic">
-              This platform provides visibility and governance over AI-driven SOC investigations. All actions are auditable and require human oversight.
-            </div>
           </div>
         </motion.div>
-      </div>
-
-      <div className="fixed bottom-4 right-8 text-[10px] text-gray-600 flex items-center gap-4">
-        <span>Built for enterprise</span>
-        <div className="flex items-center gap-1 opacity-50">
-          <span>Edit with</span>
-          <span className="font-bold">Lovable</span>
-        </div>
       </div>
     </div>
   );

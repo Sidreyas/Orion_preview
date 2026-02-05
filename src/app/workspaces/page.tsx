@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Shield, MapPin, AlertTriangle, Activity, Clock } from "lucide-react";
+import { Zap, MapPin, AlertTriangle, Activity, Clock } from "lucide-react";
 import { useAuth, workspaces } from "@/context/AuthContext";
 import { motion } from "framer-motion";
 
@@ -14,10 +14,10 @@ export default function WorkspacesPage() {
       <div className="max-w-7xl mx-auto flex justify-between items-center mb-16">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-brand-primary flex items-center justify-center shadow-lg shadow-brand-primary/20">
-            <Shield className="text-white w-5 h-5" />
+            <Zap className="text-white w-5 h-5" />
           </div>
           <div>
-            <h1 className="text-lg font-bold tracking-tight text-white">Cognitix AI</h1>
+            <h1 className="text-lg font-bold tracking-tight text-white">Orion</h1>
             <p className="text-xs text-gray-500">Security Operations Control Plane</p>
           </div>
         </div>
@@ -48,7 +48,7 @@ export default function WorkspacesPage() {
               className="group card-glass p-8 cursor-pointer hover:border-brand-primary/40 transition-all flex flex-col min-h-[320px]"
             >
               <div className="w-12 h-12 rounded-xl bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center mb-8 group-hover:border-brand-primary/40 transition-all">
-                <Shield className="text-brand-primary w-6 h-6" />
+                <Zap className="text-brand-primary w-6 h-6" />
               </div>
 
               <h3 className="text-2xl font-bold mb-2 group-hover:text-brand-primary transition-colors">

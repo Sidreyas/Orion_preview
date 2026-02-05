@@ -65,14 +65,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    const storedWorkspace = localStorage.getItem("workspace");
+    // Use sessionStorage to persist only during browser session
+    // This ensures login page shows first when opening browser
+    const storedUser = sessionStorage.getItem("user");
+    const storedWorkspace = sessionStorage.getItem("workspace");
     
     if (storedUser) {
       try {
         setUser(JSON.parse(storedUser));
       } catch (e) {
-        localStorage.removeItem("user");
+        sessionStorage.removeItem("user");
       }
     }
     
@@ -80,7 +82,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       try {
         setSelectedWorkspace(JSON.parse(storedWorkspace));
       } catch (e) {
-        localStorage.removeItem("workspace");
+        sessionStorage.removeItem("workspace");
       }
     }
     
@@ -94,21 +96,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       role: role,
     };
     setUser(newUser);
-    localStorage.setItem("user", JSON.stringify(newUser));
+    sessionStorage.setItem("user", JSON.stringify(newUser));
     router.push("/workspaces");
   };
 
   const logout = () => {
     setUser(null);
     setSelectedWorkspace(null);
-    localStorage.removeItem("user");
-    localStorage.removeItem("workspace");
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("workspace");
     router.push("/login");
   };
 
   const selectWorkspace = (workspace: Workspace) => {
     setSelectedWorkspace(workspace);
-    localStorage.setItem("workspace", JSON.stringify(workspace));
+    sessionStorage.setItem("workspace", JSON.stringify(workspace));
     // Force a complete page refresh to reload data for the new workspace
     window.location.href = "/dashboard";
   };

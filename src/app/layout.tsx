@@ -52,7 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <head>
-        <title>Secureplex | AI SOC Analyst</title>
+        <title>Orion | AI SOC Analyst</title>
         <meta name="description" content="Next-generation AI SOC analyst platform" />
       </head>
       <body className={`${inter.className} bg-background text-foreground antialiased`}>
